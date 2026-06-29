@@ -22,3 +22,6 @@ milestone_report.md
 fix_data_io.py
 *.log
 .pytest_cache/
+*.csv
+*.pt
+probe.py

@@ -29,7 +29,7 @@ python examples/01_detection_demo.py
 On a random forest baseline utilizing frequency-domain RF features (Band power, Spectral centroid, Flatness, 99% Bandwidth):
 
 ### 1. Honest Type-ID (AR vs. Bebop)
-Because DroneRF contains exactly 4 independent flight recordings for both the AR and Bebop drones, Type-ID serves as our **primary, fully leakage-free benchmark**. When grouped strictly by flight recording (so the model must predict on an entirely unseen flight):
+Because DroneRF contains exactly 4 independent flight recordings for both the AR and Bebop drones, Type-ID serves as our **primary, fully leakage-free benchmark**. Note that results are a single recording-grouped split on ~4 recordings per class (small N, high variance), so treat them as indicative of the trend rather than a precise point estimate. When grouped strictly by flight recording (so the model must predict on an entirely unseen flight):
 
 | Evaluation Split | Macro-F1 | Accuracy |
 |---|---|---|

@@ -1,0 +1,7 @@
+data/
+results/*.pt
+.git
+.gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
