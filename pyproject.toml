@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spectrahawk"
+version = "0.1.0"
+description = "Passive RF drone detection and identification baselines with leakage-aware evaluation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Insignito" }
+]
+dependencies = [
+  "numpy",
+  "scipy",
+  "scikit-learn",
+  "matplotlib"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest"
+]
+data = [
+  "kagglehub",
+  "soundfile"
+]
+
+[tool.setuptools.packages.find]
+include = ["spectrahawk*"]

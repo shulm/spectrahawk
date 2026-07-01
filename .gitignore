@@ -2,26 +2,35 @@ __pycache__/
 *.pyc
 .venv/
 env/
+*.egg-info/
 .ipynb_checkpoints/
 .DS_Store
 
-# datasets are large / licensed — never commit raw audio
+# Datasets are large / licensed - never commit raw RF captures.
 data/*
-!data/README.md
+*.csv
 *.wav
 *.flac
 *.npy
+*.pt
 
-# keep results/ figures committed so the README renders
-results/*.pt
+# Keep publication figures committed so the README renders.
+!results/
+!results/*.png
 
-# internal build process — keep local, do not publish
+# Internal build process - keep local, do not publish.
 doer_prompts/
 HANDOFF.md
 milestone_report.md
 fix_data_io.py
 *.log
 .pytest_cache/
-*.csv
-*.pt
 probe.py
+
+# LaTeX build artifacts / scratch previews.
+!report/preprint.tex
+!report/preprint.pdf
+report/_*.jpg
+*.aux
+*.out
+*.toc

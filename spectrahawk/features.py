@@ -52,3 +52,33 @@ def feature_vector(x, fs):
     
     vec = [float(total_power), float(centroid), float(flatness), float(bw_99)] + band_powers
     return np.array(vec)
+
+
+def feature_matrix_windows(X, fs, n_fft=1024):
+    """Vectorized version of ``feature_vector`` for a 2D window matrix."""
+    X = np.asarray(X)
+    f, Pxx = sps.welch(X, fs=fs, nperseg=n_fft, return_onesided=False, axis=-1)
+    sort_idx = np.argsort(f)
+    f = f[sort_idx]
+    Pxx = Pxx[:, sort_idx]
+
+    total_power = np.sum(Pxx, axis=1) + 1e-12
+    centroid = np.sum(Pxx * f[None, :], axis=1) / total_power
+
+    gmean = np.exp(np.mean(np.log(Pxx + 1e-12), axis=1))
+    amean = np.mean(Pxx, axis=1)
+    flatness = gmean / (amean + 1e-12)
+
+    cum_power = np.cumsum(Pxx, axis=1) / total_power[:, None]
+    idx_low = np.argmax(cum_power >= 0.005, axis=1)
+    has_high = cum_power[:, -1] >= 0.995
+    idx_high = np.argmax(cum_power >= 0.995, axis=1)
+    bw_99 = np.full(len(Pxx), fs, dtype=float)
+    bw_99[has_high] = f[idx_high[has_high]] - f[idx_low[has_high]]
+
+    band_powers = [
+        np.sum(q, axis=1) / total_power
+        for q in np.array_split(Pxx, 4, axis=1)
+    ]
+
+    return np.column_stack([total_power, centroid, flatness, bw_99, *band_powers])
